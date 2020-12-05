@@ -12,7 +12,7 @@ class News(WebModel.Website):
         super(News, self).__init__(url)
         try:
             self.title = self.bs.find('meta', {'property': 'og:title'})['content']
-            self.oBody = self.bs.find('div', {'class': 'post_text'})
+            self.oBody = self.bs.find('div', {'class': 'post_body'})
         except TypeError:
             print('网页无法识别')
             sys.exit(-1)

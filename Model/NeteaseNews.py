@@ -1,8 +1,8 @@
-from typing import List
 import sys
-from Model import WebModel
-from Component.MySoup import Tag, BeautifulSoup
+from typing import List
 from Component.Element import Text, Image
+from Component.MySoup import Tag
+from Model import WebModel
 
 
 class News(WebModel.Website):
@@ -11,12 +11,13 @@ class News(WebModel.Website):
     def __init__(self, url):
         super(News, self).__init__(url)
         try:
-            self.title = self.bs.find('meta', {'property': 'og:title'})['content']
+            self.title = self.bs.find(
+                'meta', {'property': 'og:title'})['content']
             self.oBody = self.bs.find('div', {'class': 'post_body'})
         except TypeError:
             print('网页无法识别')
             sys.exit(-1)
-        self.initContent()
+        self.init_content()
 
     def tag_except(self, tag: Tag) -> bool:
         """
@@ -31,7 +32,7 @@ class News(WebModel.Website):
             return True
         return False
 
-    def initContent(self):
+    def init_content(self):
         for con in self.oBody.contents:
             if isinstance(con, Tag):
                 if con.find('img'):
@@ -45,5 +46,16 @@ class News(WebModel.Website):
                     continue
                 self.content.append(Text(con))
 
-    def getContent(self) -> str:
+    def get_content(self) -> str:
         return '\n'.join(element.value for element in self.content)
+
+
+class MainPage(WebModel.Website):
+    def __init__(self, *args, **kwargs):
+        super(MainPage, self).__init__(*args, **kwargs)
+        self.news = self.bs.find(
+            'div', {'class', 'news_bj_news'}).find_all('a')
+        self.news_dict = {}
+        for item in self.news:
+            self.news_dict[item.text] = item['href']
+        

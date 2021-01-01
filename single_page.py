@@ -5,8 +5,7 @@ if __name__ == '__main__':
     oNews: News
     oNews = News(url)
     '''
-    code
+    code start
     '''
-
     print(f"\033[31m{oNews.title}\033[0m")
-    print(oNews.getContent())
+    print(oNews.get_content())

@@ -58,4 +58,3 @@ class MainPage(WebModel.Website):
         self.news_dict = {}
         for item in self.news:
             self.news_dict[item.text] = item['href']
-        

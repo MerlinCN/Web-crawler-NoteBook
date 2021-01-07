@@ -4,6 +4,7 @@ import requests
 from Component.MySoup import BeautifulSoup
 from Component import Element
 
+
 class Website:
     content: List[Element.Element]
     oBody: BeautifulSoup or None
@@ -16,4 +17,3 @@ class Website:
         self.title = ''
         self.oBody = None
         self.content = []
-
